@@ -13,8 +13,8 @@ const DUMMY: Post[] = [
 ];
 
 const DUMMYComment: Comment[] = [
-  { author: "허현", role: 'student', content: '정진아 저번주 과제 kfc인가 그거 냇어'},
-  { author: "이정진", role: 'admin', content: '아 그래? 과제는 다했으니까 통과로 바꿔줄게'},
+  { id: 1, author: "허현", role: 'student', content: '정진아 저번주 과제 kfc인가 그거 냇어'},
+  { id: 2, author: "이정진", role: 'admin', content: '아 그래? 과제는 다했으니까 통과로 바꿔줄게'},
 ];
 
 const Title = styled.h1`
@@ -26,11 +26,16 @@ function App() {
   
   const [content,setContent] = useState("");
 
+   const [commentContent, setCommentContent] = useState("");
+
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   setTitle(e.target.value);
 };
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
   setContent(e.target.value);
+};
+  const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCommentContent(e.target.value);
 };
 
 
@@ -51,13 +56,27 @@ function App() {
       <p>textarea 입력 중인 내용: {content}</p>
 
       <Button label="확인" onClick={() => alert("버튼 클릭테스트!")} />
-      {DUMMY.map((post) => (
-        <PostItem key={post.id} post={post} />
-      ))}
+      <div>
+        {DUMMY.map((post) => (
+          <PostItem key={post.id} post={post} />
+        ))}
+      </div>
 
-      {DUMMYComment.map((comment)=> (
-        <CommentItem comment={comment}/>
-      ))}
+      <input
+        value={commentContent}
+        onChange={handleCommentChange}
+        placeholder="댓글을 입력하세요"
+      />
+      <p>댓글 입력 중: {commentContent}</p>
+
+      <div>
+        {DUMMYComment.map((comment) => (
+          <CommentItem
+            key={comment.id}
+            comment={comment}
+          />
+        ))}
+      </div>
     </>
   );
 }
